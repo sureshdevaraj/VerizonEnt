@@ -5,5 +5,8 @@
   "main": "server.js",
   "author": {
     "name": "Administrator"
+  },
+  "dependencies": {
+    "restify": "^4.1.1"
   }
 }
