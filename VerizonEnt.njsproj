@@ -13,7 +13,7 @@
     <ProjectGuid>6ded1587-d258-4b22-a0ff-9f670fd6fb1a</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>server.js</StartupFile>
+    <StartupFile>app.js</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -31,6 +31,7 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="app.js" />
     <Compile Include="server.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config" />
