@@ -2,7 +2,7 @@
 var builder = require('botbuilder');
 
 // Create bot and add dialogs
-var bot = new builder.BotConnectorBot({ appId: 'YourAppId', appSecret: 'YourAppSecret' });
+var bot = new builder.BotConnectorBot({ appId: '3cc73cc0-e212-488e-8d47-4cab7f593c32', appSecret: '6VG4DophXbiNuTdKdBEWQSn' });
 bot.add('/', function (session) {
     session.send('Hello World');
 });
