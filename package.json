@@ -1,21 +1,13 @@
 {
-  "name": "nodejs-web-app1",
+  "name": "verizon-ent",
   "version": "0.0.0",
-  "description": "NodejsWebApp1",
-  "main": "server.js",
+  "description": "VerizonEnt",
+  "main": "app.js",
   "author": {
     "name": "Administrator"
   },
   "dependencies": {
-    "async": "^1.5.2",
-    "base64url": "^1.0.6",
-    "busboy": "^0.2.13",
-    "chrono-node": "^1.2.4",
-    "jsonwebtoken": "^7.1.9",
-    "node-uuid": "^1.4.7",
-    "request": "^2.74.0",
-    "restify": "^4.0.4",
-    "rsa-pem-from-mod-exp": "^0.8.4",
-    "sprintf-js": "^1.0.3"
+    "botbuilder": "^3.2.3",
+    "restify": "^4.1.1"
   }
 }
