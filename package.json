@@ -1,0 +1,13 @@
+{
+  "name": "verizon-ent",
+  "version": "0.0.0",
+  "description": "VerizonEnt",
+  "main": "app.js",
+  "author": {
+    "name": "Administrator"
+  },
+  "dependencies": {
+    "botbuilder": "^3.2.3",
+    "restify": "^4.1.1"
+  }
+}
