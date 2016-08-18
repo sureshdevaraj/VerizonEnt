@@ -23,6 +23,29 @@ server.post('/api/messages', connector.listen());
 // Bots Dialogs
 //=========================================================
 
-bot.dialog('/', function (session) {
-    session.send("Hello World");
-});
+bot.dialog("/", [
+
+    function (session) {
+        builder.Prompts.choice(session, "Hello..Welcome to Entertainment Bot.I can help with ", ["Programs", "Trending Now", "What's Hot", "Prime Time", "Schedule of a Program"]);
+    },
+
+    function (session, results) {
+        session.userData.mainmenu = results.response.entity;
+        if (session.userData.mainmenu == 1) {
+            builder.Prompts.choice(session, "Which Program you are intrested in?", ["Programs Tending 1", "Programs Tending 2", "Programs Tending3"]);
+
+        }
+        else if (session.userData.mainmenu == 2) {
+            builder.Prompts.choice(session, "Which Program you are intrested in?", ["What's Hot 1", "What's Hot 2", "What's Hot 3"]);
+        }
+        else if (session.userData.mainmenu == 3) {
+            builder.Prompts.choice(session, "Which Program you are intrested in?", ["Primetime 1", "Primetime 2", "Primetime 3"]);
+        }
+        else if (session.userData.mainmenu == 4) {
+            builder.Prompts.choice(session, "Which Program you are intrested in?", ["Schedule 1", "Schedule 2", "Schedule 3"]);
+        }
+        session.userData.submenu = results.response.entity;
+        session.send(session.userData.submenu);
+    },
+
+]);
