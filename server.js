@@ -1,28 +1,16 @@
-var restify = require('restify');
 var builder = require('botbuilder');
 
-//=========================================================
-// Bot Setup
-//=========================================================
-
-// Setup Restify Server
-var server = restify.createServer();
-server.listen(process.env.port || process.env.PORT || 3978, function () {
-    console.log('%s listening to %s', server.name, server.url);
-});
-
-// Create chat bot
-var connector = new builder.ChatConnector({
-    appId: process.env.MICROSOFT_APP_ID,
-    appPassword: process.env.MICROSOFT_APP_PASSWORD
-});
+// Create bot and bind to console
+var connector = new builder.ConsoleConnector().listen();
 var bot = new builder.UniversalBot(connector);
-server.post('/api/messages', connector.listen());
 
-//=========================================================
-// Bots Dialogs
-//=========================================================
+// Create LUIS recognizer that points at our model and add it as the root '/' dialog for our Cortana Bot.
+var model = 'https://api.projectoxford.ai/luis/v1/application?id=5fd863f9-149a-476b-b077-af95cb2176de&subscription-key=4a43888f6be54422b9926075e4fb6762';
+var recognizer = new builder.LuisRecognizer(model);
+var dialog = new builder.IntentDialog({ recognizers: [recognizer] });
+bot.dialog('/', dialog);
 
-bot.dialog('/', function (session) {
-    session.send("Hello World");
-});
+// Add intent handlers
+dialog.matches('builtin.intent.alarm.set_alarm', builder.DialogAction.send('Creating Alarm'));
+dialog.matches('builtin.intent.alarm.delete_alarm', builder.DialogAction.send('Deleting Alarm'));
+dialog.onDefault(builder.DialogAction.send("I'm sorry I didn't understand. I can only create & delete alarms."))
