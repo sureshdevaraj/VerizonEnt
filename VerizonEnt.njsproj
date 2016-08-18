@@ -36,6 +36,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\typings\node\node.d.ts" />
     <TypeScriptCompile Include="server.ts" />
+    <Content Include="examples.txt" />
     <Content Include="package.json" />
     <Content Include="README.md" />
     <Content Include="server.js.map" />
