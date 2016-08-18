@@ -1,51 +1,39 @@
 var restify = require('restify');
 var builder = require('botbuilder');
 
+var model = process.env.model || "https://api.projectoxford.ai/luis/v1/application/preview?id=5fd863f9-149a-476b-b077-af95cb2176de&subscription-key=4a43888f6be54422b9926075e4fb6762";
+var modelUri = "https://api.projectoxford.ai/luis/v1/application?id=5fd863f9-149a-476b-b077-af95cb2176de&subscription-key=4a43888f6be54422b9926075e4fb6762";
+
+
+
+var recognizer = new builder.LuisRecognizer(model);
+var dialog = new builder.IntentDialog({ recognizers: [recognizer] });
+var bot = new builder.UniversalBot(connector);
 //=========================================================
 // Bot Setup
 //=========================================================
-
-// Setup Restify Server
-var server = restify.createServer();
-server.listen(process.env.port || process.env.PORT || 3978, function () {
-    console.log('%s listening to %s', server.name, server.url);
-});
 
 // Create chat bot
 var connector = new builder.ChatConnector({
     appId: process.env.MICROSOFT_APP_ID,
     appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
-var bot = new builder.UniversalBot(connector);
+
+// Setup Restify Server
+var server = restify.createServer();
 server.post('/api/messages', connector.listen());
+server.listen(process.env.port, function () {
+    console.log("%s listening to %s", server.name, server.url);
+});
+
 
 //=========================================================
 // Bots Dialogs
 //=========================================================
 
-bot.dialog("/", [
+bot.dialog('/', dialog);
 
-    function (session) {
-        builder.Prompts.choice(session, "Hello..Welcome to Entertainment Bot.I can help with ", ["Programs", "Trending Now", "What's Hot", "Prime Time", "Schedule of a Program"]);
-    },
-
-    function (session, results) {
-        session.userData.mainmenu = results.response.entity;
-        if (session.userData.mainmenu == 1) {
-            builder.Prompts.choice(session, "Which Program you are intrested in?", ["Programs Tending 1", "Programs Tending 2", "Programs Tending3"]);
-
-        }
-        else if (session.userData.mainmenu == 2) {
-            builder.Prompts.choice(session, "Which Program you are intrested in?", ["What's Hot 1", "What's Hot 2", "What's Hot 3"]);
-        }
-        else if (session.userData.mainmenu == 3) {
-            builder.Prompts.choice(session, "Which Program you are intrested in?", ["Primetime 1", "Primetime 2", "Primetime 3"]);
-        }
-        else if (session.userData.mainmenu == 4) {
-            builder.Prompts.choice(session, "Which Program you are intrested in?", ["Schedule 1", "Schedule 2", "Schedule 3"]);
-        }
-        session.userData.submenu = results.response.entity;
-        session.send(session.userData.submenu);
-    },
-
-]);
+// Add intent handlers
+dialog.matches('builtin.intent.alarm.set_alarm', builder.DialogAction.send('Creating Alarm'));
+dialog.matches('builtin.intent.alarm.delete_alarm', builder.DialogAction.send('Deleting Alarm'));
+dialog.onDefault(builder.DialogAction.send("I'm sorry I didn't understand. I can only create & delete alarms."));

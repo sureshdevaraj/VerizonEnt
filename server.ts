@@ -1,6 +1,6 @@
 ﻿var restify = require('restify');
 var builder = require('botbuilder');
-
+/*
 //=========================================================
 // Bot Setup
 //=========================================================
@@ -22,6 +22,10 @@ server.post('/api/messages', connector.listen());
 //=========================================================
 // Bots Dialogs
 //=========================================================
+*/
+
+var connector = new builder.ConsoleConnector().listen();
+var bot = new builder.UniversalBot(connector);
 
 bot.dialog("/", [
 
